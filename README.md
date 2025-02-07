@@ -17,7 +17,10 @@ Traditional password-based authentication is vulnerable to **keylogging, shoulde
 3. **Model Training** – Implemented **SVM** for binary classification of legitimate vs. fraudulent users.  
 4. **Evaluation** – Measured **False Acceptance Rate (FAR)** and **False Rejection Rate (FRR)** to optimize performance.  
 
-## Project Structure
+## Future Work
+- Expand dataset for better model generalization.
+- Implement multi-factor authentication.
+- Improve user experience with real-time feedback.
 
 ## Contact
 For inquiries, please reach out to me at miyoku1226@gmail.com.
