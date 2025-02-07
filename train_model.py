@@ -24,3 +24,4 @@ for index, row in data.iterrows():
         duration = timestamp - press_times[key]
         key_durations.append(duration)
         press_times[key] = None
+        
