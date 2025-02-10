@@ -8,7 +8,6 @@ with open("results/svm_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 data = []
-
 def on_press(key):
     """ Record the time when the key is pressed. """
     try:
