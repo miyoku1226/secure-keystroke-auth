@@ -17,16 +17,16 @@ def on_release(key):
     try:
         release_time = time.time()
         data.append((str(key), release_time, "release"))
-        if key == keyboard.Key.esc:  # press esc to exit the program
+        if key == keyboard.Key.esc:  # Press esc to exit the program
             return False
     except:
         pass
 
-# monitor keyboard input
+# Monitor keyboard input
 with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
-# store data
+# Store data
 with open("data/keystroke_data.csv", "w", newline="") as f:
     writer = csv.writer(f)
     writer.writerow(["Key", "Timestamp", "Event"])

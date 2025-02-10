@@ -4,10 +4,10 @@ from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
-# read the data
+# Read the data
 data = pd.read_csv("data/keystroke_data.csv")
 
-# calculate keys' durations and intervals
+# Calculate keys' durations and intervals
 key_durations = []
 key_intervals = []
 
@@ -28,18 +28,18 @@ for index, row in data.iterrows():
 for i in range(1, len(key_durations)):
     key_intervals.append(key_durations[i] - key_durations[i-1])
 
-# generate training data
+# Generate training data
 X = np.array([key_durations[:-1], key_intervals]).T
 y = np.ones(len(X))  # assuming that the data is from the same user
 
-# divide the training set and the test set
+# Divide the training set and the test set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# train SVM machine learning model
+# Train SVM machine learning model
 model = SVC(kernel="linear")
 model.fit(X_train, y_train)
 
-# forecast and evaluation
+# Forecast and evaluation
 y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 

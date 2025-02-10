@@ -3,14 +3,14 @@ import pickle
 import numpy as np
 from pynput import keyboard
 
-# load the trained model
+# Load the trained model
 with open("results/svm_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 data = []
 
 def on_press(key):
-    """ record the time when the key is pressed """
+    """ Record the time when the key is pressed. """
     try:
         press_time = time.time()
         data.append((str(key), press_time, "press"))
@@ -18,21 +18,21 @@ def on_press(key):
         pass
 
 def on_release(key):
-    """ record the key release time and calculate the key duration """
+    """ Record the key release time and calculate the key duration. """
     try:
         release_time = time.time()
         data.append((str(key), release_time, "release"))
-        if key == keyboard.Key.esc:  # press ESC to exit the program
+        if key == keyboard.Key.esc:  # Press ESC to exit the program
             return False
     except:
         pass
 
-# monitor keyboard input
+# Monitor keyboard input
 print("Please type your passphrase for authentication...")
 with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
-# calculate features
+# Calculate features
 press_times = {}
 key_durations = []
 key_intervals = []
@@ -49,10 +49,10 @@ for entry in data:
 for i in range(1, len(key_durations)):
     key_intervals.append(key_durations[i] - key_durations[i-1])
 
-# construct the characterisric data
+# Construct the characterisric data
 X_new = np.array([key_durations[:-1], key_intervals]).T
 
-# predict identity
+# Predict identity
 prediction = model.predict([X_new.flatten()])
 
 if prediction[0] == 1:
