@@ -27,7 +27,7 @@ with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
 # Store data
-with open("data/keystroke_data.csv", "w", newline="") as f:
+with open("features.csv", "w", newline="") as f:
     writer = csv.writer(f)
     writer.writerow(["Key", "Timestamp", "Event"])
     writer.writerows(data)
