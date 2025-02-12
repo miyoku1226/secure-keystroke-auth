@@ -45,4 +45,4 @@ def generate_keystroke_data(file_name, num_users=5, num_samples_per_user=200):
     print(f"Keystroke data saved to 'data/{file_name}'.")
 
 # Generate dataset with more realistic user typing speeds
-generate_keystroke_data("features.csv", num_users=5, num_samples_per_user=300)
+generate_keystroke_data("features.csv", num_users=5, num_samples_per_user=150)
