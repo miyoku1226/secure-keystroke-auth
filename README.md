@@ -1,7 +1,7 @@
 # Secure Keystroke Authentication
 
 ## Overview
-This project explores **keystroke dynamics as an additional security layer** for passphrase-based authentication. By analyzing the unique timing patterns of an individual’s typing behavior, we aim to enhance authentication security while maintaining user convenience.
+This project explores **keystroke dynamics as an additional security layer** for passphrase-based authentication. By analyzing the unique timing patterns of an individual’s typing behavior, I aim to enhance authentication security while maintaining user convenience.
 
 ## Motivation
 Traditional password-based authentication is vulnerable to **keylogging, shoulder surfing, and brute-force attacks**. To improve security without relying on hardware tokens or biometrics, this project investigates **keystroke dynamics as a behavioral biometric**, using typing rhythm to distinguish legitimate users from impostors.
