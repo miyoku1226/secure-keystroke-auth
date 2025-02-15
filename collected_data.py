@@ -1,35 +1,51 @@
+import os
 import time
-import csv
+import pandas as pd
 from pynput import keyboard
 
+# Ensure the 'data' directory exists
+os.makedirs("data", exist_ok=True)
+
+# Ask for user ID
+user_id = input("Enter User ID (e.g., 1, 2, 3...): ")
+
+# Storage for keystroke data
 data = []
 
 def on_press(key):
-    """ Record the time when the button is pressed. """
+    """Records the timestamp when a key is pressed."""
     try:
+        key_char = key.char if hasattr(key, 'char') else str(key)  # Handle special keys
         press_time = time.time()
-        data.append((str(key), press_time, "press"))
-    except:
-        pass
+        data.append([key_char, press_time, "press", user_id])
+    except Exception as e:
+        print(f"Error: {e}")
 
 def on_release(key):
-    """ Record the button release time and calculate the button duration. """
+    """Records the timestamp when a key is released."""
     try:
+        key_char = key.char if hasattr(key, 'char') else str(key)
         release_time = time.time()
-        data.append((str(key), release_time, "release"))
-        if key == keyboard.Key.esc:  # Press esc to exit the program
+        data.append([key_char, release_time, "release", user_id])
+        
+        # Stop collection when 'ESC' is pressed
+        if key == keyboard.Key.esc:
             return False
-    except:
-        pass
+    except Exception as e:
+        print(f"Error: {e}")
 
-# Monitor keyboard input
+# Prompt user to type a phrase
+print("Please type the following phrase multiple times: 'the quick brown fox jumps over the lazy dog'")
+print("Press ESC when you are finished.")
+
+# Start keyboard listener
 with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
-# Store data
-with open("features.csv", "w", newline="") as f:
-    writer = csv.writer(f)
-    writer.writerow(["Key", "Timestamp", "Event"])
-    writer.writerows(data)
+# Convert to DataFrame
+df = pd.DataFrame(data, columns=["Key", "Timestamp", "Event", "User_Label"])
 
-print("Keystroke data saved successfully!")
+# Ask for file name and save
+file_name = f"user_{user_id}.csv"
+df.to_csv(f"data/{file_name}", index=False)
+print(f"Keystroke data saved to 'data/{file_name}'")
