@@ -3,7 +3,6 @@ import pickle
 import numpy as np
 from pynput import keyboard
 
-# Load trained model and scaler
 with open("models/svm_model.pkl", "rb") as f:
     model = pickle.load(f)
 
@@ -33,7 +32,6 @@ def on_release(key):
     except Exception as e:
         print(f"Error: {e}")
 
-# Start keystroke authentication
 print("Please type the following passphrase for authentication: 'the quick brown fox jumps over the lazy dog'")
 print("Press ESC when finished.")
 
@@ -67,13 +65,11 @@ for entry in data:
         typing_speeds.append(1 / duration if duration > 0 else 0)
         press_times[key] = None
 
-# Ensure lists are the same length
 min_length = min(len(key_durations), len(key_intervals), len(typing_speeds))
 key_durations = key_durations[:min_length]
 key_intervals = key_intervals[:min_length]
 typing_speeds = typing_speeds[:min_length]
 
-# Compute additional features
 bigram_intervals = [key_intervals[i] + key_intervals[i - 1] for i in range(1, min_length)] + [0]
 mean_duration = np.mean(key_durations) if key_durations else 0
 std_duration = np.std(key_durations) if key_durations else 0
@@ -82,7 +78,6 @@ std_interval = np.std(key_intervals) if key_intervals else 0
 mean_typing_speed = np.mean(typing_speeds) if typing_speeds else 0
 pause_count = len(pause_times)
 
-# Generate input feature vector with the same 10 features as training
 X_new = np.array([[
     key_durations[-1] if key_durations else 0,
     key_intervals[-1] if key_intervals else 0,
@@ -96,10 +91,8 @@ X_new = np.array([[
     pause_count
 ]])
 
-# Normalize features
 X_new = scaler.transform(X_new)
 
-# Predict user identity
 prediction = model.predict(X_new)
 print(f"Predicted User: {prediction[0]}")
 
