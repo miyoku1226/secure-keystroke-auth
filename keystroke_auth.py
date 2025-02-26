@@ -55,7 +55,7 @@ for entry in data:
             key_intervals.append(interval)
             if interval > 0.25:
                 pause_times.append(interval)
-
+                
         last_timestamp = timestamp
 
     elif event == "release" and key in press_times:
