@@ -37,5 +37,5 @@ def generate_keystroke_data(file_name, num_users=5, num_samples_per_user=200):
 
     df.to_csv(f"data/{file_name}", index=False)
     print(f"Keystroke data saved to 'data/{file_name}'.")
-
+    
 generate_keystroke_data("features.csv", num_users=5, num_samples_per_user=150)
