@@ -38,7 +38,6 @@ print("Press ESC when finished.")
 with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
-# Extract features
 press_times = {}
 key_durations = []
 key_intervals = []
