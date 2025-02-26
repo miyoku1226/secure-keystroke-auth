@@ -7,20 +7,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 
-# Ensure the 'models' directory exists
 os.makedirs("models", exist_ok=True)
 
-# List to store data from different sources
 data_list = []
 
-# 1️⃣ Load synthetic data from 'features.csv' (if it exists)
 features_path = "data/features.csv"
 if os.path.exists(features_path):
     print("Loading synthetic data from 'features.csv'...")
     features_data = pd.read_csv(features_path)
     data_list.append(features_data)
 
-# 2️⃣ Load real user data ('user_*.csv' files)
 data_path = "data/"
 for file in os.listdir(data_path):
     if file.startswith("user_") and file.endswith(".csv"):
@@ -28,21 +24,17 @@ for file in os.listdir(data_path):
         user_data = pd.read_csv(os.path.join(data_path, file))
         data_list.append(user_data)
 
-# Ensure we have data
 if not data_list:
     print("ERROR: No data found! Please generate synthetic data or collect real data.")
     exit(1)
 
-# Combine all data
 data = pd.concat(data_list, ignore_index=True)
 
-# Ensure correct column naming
 if "User Label" in data.columns:
     data.rename(columns={"User Label": "User_Label"}, inplace=True)
 
 print("Unique User Labels in Dataset:", np.unique(data["User_Label"]))
 
-# Feature extraction
 key_durations = []
 key_intervals = []
 typing_speeds = []
@@ -74,12 +66,10 @@ for index, row in data.iterrows():
             key_durations.append(duration)
             typing_speeds.append(1 / duration if duration > 0 else 0)
             press_times[key] = None  # Reset
-            user_labels.append(user_label)  # Store user label for each valid sample
+            user_labels.append(user_label) 
 
-# Ensure all feature lists have the same length
 min_length = min(len(key_durations), len(key_intervals), len(typing_speeds), len(user_labels))
 
-# Trim all lists to the same length
 key_durations = key_durations[:min_length]
 key_intervals = key_intervals[:min_length]
 typing_speeds = typing_speeds[:min_length]
@@ -87,15 +77,12 @@ pause_times = pause_times[:min_length]
 bigram_intervals = [key_intervals[i] + key_intervals[i - 1] for i in range(1, min_length)] + [0]
 user_labels = user_labels[:min_length]
 
-# Ensure valid samples
 if len(key_durations) < 2 or len(user_labels) < 2:
     print("ERROR: Not enough valid keystroke samples to train the model.")
     exit(1)
 
-# Convert user labels to a NumPy array
 y = np.array(user_labels)
 
-# Additional Features
 mean_duration = np.mean(key_durations)
 std_duration = np.std(key_durations)
 mean_interval = np.mean(key_intervals)
@@ -103,7 +90,6 @@ std_interval = np.std(key_intervals)
 mean_typing_speed = np.mean(typing_speeds)
 pause_count = len(pause_times)
 
-# Generate feature matrix
 X = np.array([
     key_durations, 
     key_intervals, 
@@ -119,24 +105,19 @@ X = np.array([
 
 print("Final unique classes in y:", np.unique(y))
 
-# Normalize the feature data
 scaler = StandardScaler()
 X = scaler.fit_transform(X)
 
-# Reduce test set size to maximize training
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, stratify=y, random_state=42)
 
-# Train SVM model
 model = SVC(kernel="rbf", C=1, gamma=0.01)
 model.fit(X_train, y_train)
 
-# Evaluate the model
 y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 
 print(f"Model trained successfully with accuracy: {accuracy * 100:.2f}%")
 
-# Save trained model and scaler
 with open("models/svm_model.pkl", "wb") as f:
     pickle.dump(model, f)
 
