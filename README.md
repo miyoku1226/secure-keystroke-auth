@@ -62,9 +62,7 @@ python keystroke_auth.py
 - Develop a GUI for user-friendly interaction.
 - Test the system on different keyboard layouts and devices.
 
-## References
-- [Keystroke Dynamics in Cybersecurity](https://scholar.google.com/)
-- [Support Vector Machines in Biometrics](https://arxiv.org/)
+
 
 ## License
 This project is open-source under the MIT License.
