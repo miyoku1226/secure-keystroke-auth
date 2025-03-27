@@ -9,6 +9,35 @@ Secure Keystroke Authentication is a biometric-based authentication system that 
 - Detects unauthorized users based on typing behavior.
 - Lightweight and does not require additional hardware.
 
+## Technologies Used
+
+- **Python**
+- **NumPy, Pandas**
+- **Scikit-learn** – logistic regression model
+- **TensorFlow / Keras** – simple feedforward neural network
+
+## How It Works
+
+### 1. **Keystroke Timing Feature Extraction**
+- Each typing session records:
+  - **Hold time** (key down → key up)
+  - **Latency** (delay between keys)
+  - **Flight time** (key up → next key down)
+
+### 2. **Data Preprocessing**
+- Clean input data
+- Normalize timing features
+- Balance dataset if needed
+
+### 3. **Model Training**
+- Logistic Regression (scikit-learn)
+- Neural Network (TensorFlow)
+- Compare performance on accuracy & generalization
+
+### 4. **Prediction**
+- Real-time or simulated user input is passed into the model
+- Model returns a binary classification: “user” or “intruder”
+
 ## Project Structure
 ```
 ├── collected_data.py       # Script to collect keystroke data
