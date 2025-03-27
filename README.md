@@ -92,8 +92,3 @@ python keystroke_auth.py
 - Test the system on different keyboard layouts and devices.
 
 
-
-## License
-This project is open-source under the MIT License.
-
-
