@@ -83,7 +83,7 @@ python keystroke_auth.py
 | Model      | Accuracy | False Accept Rate (FAR) | False Reject Rate (FRR) |
 |------------|----------|-----------------|-----------------|
 | SVM        | 85%      | 5%              | 10%             |
-| KNN        | 82%      | 7%              | 12%             |
+| KNN        | 81%      | 7%              | 12%             |
 
 ## Future Improvements
 - Improve accuracy by testing with a larger dataset.
