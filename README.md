@@ -1,6 +1,4 @@
 # Secure Keystroke Authentication
-
-## Overview
 Secure Keystroke Authentication is a biometric-based authentication system that leverages keystroke dynamics to enhance security. By analyzing typing patterns, such as key press durations and transition times, this project aims to provide an additional layer of authentication beyond traditional password-based methods.
 
 ## Features
